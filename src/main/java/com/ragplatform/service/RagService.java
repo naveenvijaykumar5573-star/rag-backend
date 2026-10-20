@@ -25,10 +25,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import org.springframework.web.server.ResponseStatusException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @Service
 public class RagService {
+	private static final Logger logger =
+	        LoggerFactory.getLogger(RagService.class);
 
     private final RestTemplate restTemplate;
 
@@ -103,12 +107,13 @@ public class RagService {
          );
 
      } catch (Exception e) {
+logger.error("RAG ask request failed",e);
 
-         throw new ResponseStatusException(
-                 HttpStatus.SERVICE_UNAVAILABLE,
-                 "RAG service temporarily unavailable"
-         );
-     }
+            throw new ResponseStatusException(
+                    HttpStatus.SERVICE_UNAVAILABLE,
+                    "RAG service temporarily unavailable"
+            );
+        }
  }
  // =========================================================
  // DELETE DOCUMENT
@@ -410,10 +415,10 @@ public class RagService {
          );
 
      } catch (Exception e) {
-    	    throw new ResponseStatusException(
-    	            HttpStatus.SERVICE_UNAVAILABLE,
-    	            "RAG service temporarily unavailable"
-    	    );
-    	}
+            throw new ResponseStatusException(
+                    HttpStatus.SERVICE_UNAVAILABLE,
+                    "RAG service temporarily unavailable"
+            );
+        }
  }
 }
